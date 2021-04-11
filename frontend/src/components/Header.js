@@ -14,7 +14,7 @@ export const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
-              <LinkContainer to={paths.cart}>
+              <LinkContainer to={paths.cart()}>
                 <Nav.Link>
                   <i className="fas fa-shopping-cart" /> Cart
                 </Nav.Link>
