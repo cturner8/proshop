@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import {
   Row,
   Col,
@@ -18,7 +18,10 @@ import { paths } from "../router/paths";
 
 import { listProductDetails } from "../actions/product.actions";
 
-export const ProductScreen = ({ match, history }) => {
+export const ProductScreen = () => {
+  const history = useHistory();
+  const { id } = useParams();
+
   const [qty, setQty] = useState(1);
 
   const dispatch = useDispatch();
@@ -29,11 +32,11 @@ export const ProductScreen = ({ match, history }) => {
   const isInStockKeys = [...Array(product.countInStock).keys()];
 
   useEffect(() => {
-    dispatch(listProductDetails(match.params.id));
-  }, [dispatch, match.params.id]);
+    dispatch(listProductDetails(id));
+  }, [dispatch, id]);
 
   const addToCartHandler = () => {
-    const url = paths.cart(match.params.id);
+    const url = paths.cart(id);
     history.push(`${url}?qty=${qty}`);
   };
 

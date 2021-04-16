@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams, useHistory } from "react-router-dom";
 import {
   Row,
   Col,
@@ -15,8 +15,11 @@ import { paths } from "../router/paths";
 
 import { addToCart, removeFromCart } from "../actions/cart.actions";
 
-export const CartScreen = ({ match, location, history }) => {
-  const productId = match.params.id;
+export const CartScreen = () => {
+  const history = useHistory();
+  const location = useLocation();
+  const { id: productId } = useParams();
+
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
   const dispatch = useDispatch();
