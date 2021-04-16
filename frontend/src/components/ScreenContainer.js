@@ -5,11 +5,13 @@ export const ScreenContainer = ({
   variant = "standard",
   loading,
   error,
+  success,
   messageVariant = "danger",
   children,
 }) => {
   const loader = <Loader />;
   const errorMessage = <Message variant={messageVariant}>{error}</Message>;
+  const successMessage = <Message variant="success">{success}</Message>;
 
   switch (variant) {
     case "standard":
@@ -19,6 +21,7 @@ export const ScreenContainer = ({
         <>
           {loading && loader}
           {error && errorMessage}
+          {success && successMessage}
           {children}
         </>
       );
