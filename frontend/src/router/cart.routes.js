@@ -1,6 +1,7 @@
 import { ShippingScreen } from "../screens/ShippingScreen";
 import { PaymentScreen } from "../screens/PaymentScreen";
 import { CartScreen } from "../screens/CartScreen";
+import { PlaceOrderScreen } from "../screens/PlaceOrderScreen";
 
 import { paths } from "./paths";
 import { mapRoutes } from "./routeHelpers";
@@ -17,6 +18,10 @@ const routePaths = [
   {
     path: paths.payment,
     component: PaymentScreen,
+  },
+  {
+    path: paths.placeOrder,
+    component: PlaceOrderScreen,
   },
 ];
 

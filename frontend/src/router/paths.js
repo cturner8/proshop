@@ -8,4 +8,5 @@ export const paths = {
   shipping: "/shipping",
   payment: "/payment",
   placeOrder: "/placeorder",
+  order: (id) => `/order/${id}`,
 };
