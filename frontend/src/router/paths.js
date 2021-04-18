@@ -5,4 +5,7 @@ export const paths = {
   cart: (id = "") => `/cart/${id}`,
   register: "/register",
   profile: "/profile",
+  shipping: "/shipping",
+  payment: "/payment",
+  placeOrder: "/placeorder",
 };
