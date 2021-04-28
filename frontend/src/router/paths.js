@@ -9,4 +9,9 @@ export const paths = {
   payment: "/payment",
   placeOrder: "/placeorder",
   order: (id) => `/order/${id}`,
+  user: (id) => `/user/${id}/edit`,
+  adminUserList: "/admin/userList",
+  productList: "/admin/productlist",
+  orderList: "/admin/orderlist",
+  adminUserEdit: (id) => `/admin/user/${id}/edit`,
 };
