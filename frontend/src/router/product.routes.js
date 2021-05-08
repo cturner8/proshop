@@ -1,5 +1,6 @@
 import { ProductScreen } from "../screens/ProductScreen";
 import { ProductListScreen } from "../screens/ProductListScreen";
+import { ProductEditScreen } from "../screens/ProductEditScreen";
 
 import { paths } from "./paths";
 import { mapRoutes } from "./routeHelpers";
@@ -12,6 +13,10 @@ const routePaths = [
   {
     path: paths.productList,
     component: ProductListScreen,
+  },
+  {
+    path: paths.adminProductEdit(":id"),
+    component: ProductEditScreen,
   },
 ];
 

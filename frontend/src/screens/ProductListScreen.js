@@ -1,16 +1,22 @@
 import { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Table, Button, Row, Col } from "react-bootstrap";
 
 import { ScreenContainer } from "../components/ScreenContainer";
 
-import { listProducts, deleteProduct } from "../actions/product.actions";
+import {
+  listProducts,
+  deleteProduct,
+  createProduct,
+} from "../actions/product.actions";
+import { PRODUCT_CREATE_RESET } from "../constants/product.constants";
 
 import { paths } from "../router/paths";
 
 import {
+  useProductCreateState,
   useProductDeleteState,
   useProductListState,
   useUserLoginState,
@@ -18,9 +24,15 @@ import {
 
 export const ProductListScreen = () => {
   const history = useHistory();
-  const params = useParams();
   const dispatch = useDispatch();
   const { products = [], loading, error } = useProductListState();
+
+  const {
+    success: successCreate,
+    product: createdProduct = {},
+    loading: loadingCreate,
+    error: errorCreate,
+  } = useProductCreateState();
 
   const {
     success: deleteSuccess,
@@ -28,15 +40,28 @@ export const ProductListScreen = () => {
     loading: deleteLoading,
   } = useProductDeleteState();
 
-  const { userInfo } = useUserLoginState();
+  const { userInfo = {} } = useUserLoginState();
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listProducts());
-    } else {
+    dispatch({ type: PRODUCT_CREATE_RESET });
+
+    if (!userInfo.isAdmin) {
       history.push(paths.login);
     }
-  }, [dispatch, history, userInfo, deleteSuccess]);
+
+    if (successCreate) {
+      history.push(paths.adminProductEdit(createdProduct._id));
+    } else {
+      dispatch(listProducts());
+    }
+  }, [
+    dispatch,
+    history,
+    userInfo,
+    deleteSuccess,
+    successCreate,
+    createdProduct._id,
+  ]);
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure?")) {
@@ -44,7 +69,9 @@ export const ProductListScreen = () => {
     }
   };
 
-  const createProductHandler = () => {};
+  const createProductHandler = () => {
+    dispatch(createProduct());
+  };
 
   return (
     <>
@@ -60,8 +87,8 @@ export const ProductListScreen = () => {
         </Col>
       </Row>
       <ScreenContainer
-        loading={loading || deleteLoading}
-        error={error || deleteError}
+        loading={loading || deleteLoading || loadingCreate}
+        error={error || deleteError || errorCreate}
       >
         <Table striped bordered hover responsive className="table-sm">
           <thead>

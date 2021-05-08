@@ -1,7 +1,8 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useMemo } from "react";
 
 export const useForm = (initialValues) => {
-  const [values, setValues] = useState(initialValues);
+  const initial = useMemo(() => initialValues, [initialValues]);
+  const [values, setValues] = useState(initial);
   const handleChange = useCallback((e) => {
     const { name, value, checked } = e.target;
     let newValue = "";
@@ -17,12 +18,9 @@ export const useForm = (initialValues) => {
       [name]: newValue,
     }));
   }, []);
-  const reset = useCallback(() => {
-    setValues(initialValues);
-  }, [initialValues]);
   const set = useCallback((v) => {
     setValues(v);
   }, []);
 
-  return [values, handleChange, set, reset];
+  return [values, handleChange, set];
 };
