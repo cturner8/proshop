@@ -14,4 +14,5 @@ export const paths = {
   productList: "/admin/productlist",
   orderList: "/admin/orderlist",
   adminUserEdit: (id) => `/admin/user/${id}/edit`,
+  adminProductEdit: (id) => `/admin/product/${id}/edit`,
 };
