@@ -6,17 +6,27 @@ import { Table, Button, Row, Col } from "react-bootstrap";
 
 import { ScreenContainer } from "../components/ScreenContainer";
 
-import { listProducts } from "../actions/product.actions";
+import { listProducts, deleteProduct } from "../actions/product.actions";
 
 import { paths } from "../router/paths";
 
-import { useProductListState, useUserLoginState } from "../hooks";
+import {
+  useProductDeleteState,
+  useProductListState,
+  useUserLoginState,
+} from "../hooks";
 
 export const ProductListScreen = () => {
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
   const { products = [], loading, error } = useProductListState();
+
+  const {
+    success: deleteSuccess,
+    error: deleteError,
+    loading: deleteLoading,
+  } = useProductDeleteState();
 
   const { userInfo } = useUserLoginState();
 
@@ -26,9 +36,13 @@ export const ProductListScreen = () => {
     } else {
       history.push(paths.login);
     }
-  }, [dispatch, history, userInfo]);
+  }, [dispatch, history, userInfo, deleteSuccess]);
 
-  const deleteHandler = (id) => {};
+  const deleteHandler = (id) => {
+    if (window.confirm("Are you sure?")) {
+      dispatch(deleteProduct(id));
+    }
+  };
 
   const createProductHandler = () => {};
 
@@ -45,7 +59,10 @@ export const ProductListScreen = () => {
           </Button>
         </Col>
       </Row>
-      <ScreenContainer loading={loading} error={error}>
+      <ScreenContainer
+        loading={loading || deleteLoading}
+        error={error || deleteError}
+      >
         <Table striped bordered hover responsive className="table-sm">
           <thead>
             <tr>

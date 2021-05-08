@@ -5,3 +5,4 @@ export { useForm } from "./useForm";
 export { useUserDetailsState } from "./useUserDetailsState";
 export { useUserUpdateState } from "./useUserUpdateState";
 export { useProductListState } from "./useProductListState";
+export { useProductDeleteState } from "./useProductDeleteState";
