@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Table, Button, Row, Col } from "react-bootstrap";
 
 import { ScreenContainer } from "../components/ScreenContainer";
+import { Paginate } from "../components/Paginate";
 
 import {
   listProducts,
@@ -24,8 +25,10 @@ import {
 
 export const ProductListScreen = () => {
   const history = useHistory();
+  const { pageNumber = 1 } = useParams();
+
   const dispatch = useDispatch();
-  const { products = [], loading, error } = useProductListState();
+  const { products = [], loading, error, pages, page } = useProductListState();
 
   const {
     success: successCreate,
@@ -52,7 +55,7 @@ export const ProductListScreen = () => {
     if (successCreate) {
       history.push(paths.adminProductEdit(createdProduct._id));
     } else {
-      dispatch(listProducts());
+      dispatch(listProducts("", pageNumber));
     }
   }, [
     dispatch,
@@ -61,6 +64,7 @@ export const ProductListScreen = () => {
     deleteSuccess,
     successCreate,
     createdProduct._id,
+    pageNumber,
   ]);
 
   const deleteHandler = (id) => {
@@ -90,6 +94,7 @@ export const ProductListScreen = () => {
         loading={loading || deleteLoading || loadingCreate}
         error={error || deleteError || errorCreate}
       >
+        <Paginate pages={pages} page={page} isAdmin={userInfo.isAdmin} />
         <Table striped bordered hover responsive className="table-sm">
           <thead>
             <tr>

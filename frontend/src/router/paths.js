@@ -12,7 +12,12 @@ export const paths = {
   user: (id) => `/user/${id}/edit`,
   adminUserList: "/admin/userList",
   productList: "/admin/productlist",
+  productListPage: (pageNumber) => `/admin/productlist/${pageNumber}`,
   orderList: "/admin/orderlist",
   adminUserEdit: (id) => `/admin/user/${id}/edit`,
   adminProductEdit: (id) => `/admin/product/${id}/edit`,
+  search: (keyword) => `/search/${keyword}`,
+  page: (pageNumber) => `/page/${pageNumber}`,
+  searchAndPage: (keyword, pageNumber) =>
+    `/search/${keyword}/page/${pageNumber}`,
 };

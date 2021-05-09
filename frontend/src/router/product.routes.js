@@ -13,6 +13,12 @@ const routePaths = [
   {
     path: paths.productList,
     component: ProductListScreen,
+    exact: true,
+  },
+  {
+    path: paths.productListPage(":pageNumber"),
+    component: ProductListScreen,
+    exact: true,
   },
   {
     path: paths.adminProductEdit(":id"),

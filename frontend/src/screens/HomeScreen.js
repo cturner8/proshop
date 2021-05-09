@@ -1,18 +1,21 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 
 import { Product } from "../components/Product";
+import { Paginate } from "../components/Paginate";
 import { ScreenContainer } from "../components/ScreenContainer";
 import { listProducts } from "../actions/product.actions";
 
 export const HomeScreen = () => {
+  const { keyword = "", pageNumber = 1 } = useParams();
   const dispatch = useDispatch();
   const productList = useSelector(({ productList }) => productList);
-  const { products = [], loading, error } = productList;
+  const { products = [], loading, error, page, pages } = productList;
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    dispatch(listProducts(keyword, pageNumber));
+  }, [dispatch, keyword, pageNumber]);
 
   return (
     <>
@@ -25,6 +28,7 @@ export const HomeScreen = () => {
             </Col>
           ))}
         </Row>
+        <Paginate pages={pages} page={page} keyword={keyword} />
       </ScreenContainer>
     </>
   );
