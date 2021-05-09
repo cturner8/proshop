@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap";
 
 import { Rating } from "../components/Rating";
+import { Meta } from "../components/Meta";
 import { ScreenContainer } from "../components/ScreenContainer";
 
 import { paths } from "../router/paths";
@@ -79,6 +80,7 @@ export const ProductScreen = () => {
         Go Back
       </Link>
       <ScreenContainer loading={loading} error={error}>
+        <Meta title={`ProShop | ${product.name}`} />
         <Row>
           <Col md={6}>
             <Image src={product.image} alt={product.name} fluid />
