@@ -10,6 +10,7 @@ import { getUserDetails, updateUserProfile } from "../actions/user.actions";
 import { listMyOrders } from "../actions/order.actions";
 
 import { paths } from "../router/paths";
+import { USER_UPDATE_PROFILE_RESET } from "../constants/user.constants";
 
 export const ProfileScreen = () => {
   const history = useHistory();
@@ -38,6 +39,10 @@ export const ProfileScreen = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    dispatch({ type: USER_UPDATE_PROFILE_RESET });
+  }, [success, dispatch]);
 
   useEffect(() => {
     if (!userInfo) {
